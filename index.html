@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NUVI - Activities</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Sans"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.css"/>
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+
+        body {
+            color: #0d0d0d;
+            font-family: 'Droid Sans', sans-serif;
+        }
+
+        .main {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            min-width: 750px;
+
+            overflow: auto;
+            background: #45484d; /* Old browsers */
+            background: -moz-linear-gradient(top, #45484d 0%, #000000 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #45484d 0%, #000000 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #45484d 0%, #000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#45484d', endColorstr='#000000', GradientType=0); /* IE6-9 */
+        }
+
+        .filters {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 100px;
+        }
+
+        .table {
+            position: absolute;
+            top: 100px;
+            right: 0;
+            left: 0;
+            bottom: 0;
+        }
+
+        .row {
+            position: relative;
+            height: 50px;
+            margin: 15px;
+            border-radius: 10px;
+
+            border: solid 1px #ddd;
+
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e5e5e5+100;White+3D */
+            background: rgb(255, 255, 255); /* Old browsers */
+            background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(229, 229, 229, 1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(229, 229, 229, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(229, 229, 229, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0); /* IE6-9 */
+
+            -webkit-box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.5);
+            -moz-box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.5);
+
+            transition: opacity .25s ease-in-out, height .25s ease-in-out;
+        }
+
+        .row.ng-leave.ng-leave-active,
+        .row.ng-enter {
+            opacity:0;
+            height:0;
+        }
+
+        .row.ng-leave,
+        .row.ng-enter.ng-enter-active {
+            opacity: 1;
+            height: 50px;
+        }
+
+        .sentiment {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            font-size: 24px;
+            color: #feff18;
+        }
+
+        .sentiment i {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+        }
+
+        .sentiment i:first-child {
+            top: -4px;
+            left: -4px;
+            font-size: 30px;
+            color: #e8bb37;
+            margin: 1px;
+        }
+
+        .selected {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            height: 50px;
+            line-height: 50px;
+
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .type {
+            position: absolute;
+            top: 0;
+            left: 75px;
+            height: 50px;
+            line-height: 50px;
+
+            font-size: 40px;
+            color: #1934b0;
+        }
+
+        .user {
+            position: absolute;
+            top: 5px;
+            left: 125px;
+            height: 40px;
+            width: 200px;
+        }
+
+        .user .name {
+            height: 23px;
+            line-height: 23px;
+            font-size: 18px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user .username {
+            height: 20px;
+            line-height: 15px;
+            font-size: 14px;
+            font-style: italic;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .content {
+            position: absolute;
+            top: 5px;
+            left: 330px;
+            right: 145px;
+            height: 40px;
+        }
+
+        .content .contentText {
+            height: 40px;
+            line-height: 40px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .content .contentImage {
+            height: 40px;
+
+            overflow: hidden;
+        }
+
+        .content .contentImage img {
+            max-height: 40px;
+            max-width: 40px;
+        }
+
+        .meta {
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            height: 40px;
+            width: 120px;
+            text-align: right;
+        }
+
+        .meta .date {
+            height: 20px;
+            line-height: 20px;
+            font-size: 14px;
+        }
+
+        .meta .stats {
+            height: 20px;
+            line-height: 20px;
+            font-size: 14px;
+        }
+
+        .meta .stats span {
+            display: inline-block;
+            margin-right: 2px;
+        }
+
+        .buttons {
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+        }
+
+        .buttons button {
+            border: 0;
+            background: #fff;
+            font-size: 18px;
+            height: 35px;
+            line-height: 35px;
+            border-radius: 10px;
+            outline: none;
+            padding: 0 20px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .buttons .select-all {
+            width: 55px;
+            text-align: left;
+        }
+
+        .filter {
+            position: absolute;
+            bottom: 0;
+            right: 15px;
+        }
+
+        .filter input {
+            outline: none;
+            border-radius: 10px;
+            font-size: 18px;
+            height: 35px;
+            line-height: 35px;
+            padding: 0 20px;
+            border: 0;
+            background: #fff;
+        }
+
+    </style>
+</head>
+<body ng-app="nuvi" ng-cloak>
+<div ng-controller="mainCtrl">
+    <div class="main">
+        <div class="filters">
+            <div class="buttons">
+                <button class="select-all" ng-click="selectAll()"><i class="fa" ng-class="getSelectAllClass()"></i></button>
+                <button><i class="fa fa-thumbs-o-up"></i> Like</button>
+                <button><i class="fa fa-share"></i> Share</button>
+                <button><i class="fa fa-comments-o"></i> Comment</button>
+            </div>
+            <div class="filter"><input ng-model="filter.text" ng-keyup="updateFilter()" placeholder="filter" /></div>
+        </div>
+        <div class="table">
+            <div class="row" ng-repeat="row in filter.list | limitTo:100 track by row.id">
+                <div class="sentiment" ng-if="row.activity_sentiment > 0"><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                <i class="selected fa" ng-class="getSelectedClass(row)" ng-click="select(row)"></i>
+                <a class="type" target="_blank" ng-href="{{row.activity_url}}"><i class="fa" ng-class="getTypeClass(row)"></i></a>
+                <div class="user" title="{{row.actor_description}}">
+                    <div class="name">{{row.actor_name}}</div>
+                    <div class="username">{{row.actor_username}}</div>
+                </div>
+                <div class="content">
+                    <div ng-if="!row.activity_attachment_type" class="contentText" title="{{row.activity_message}}">
+                        {{row.activity_message}}
+                    </div>
+                    <div ng-if="row.activity_attachment_type" class="contentImage" title="{{row.activity_attachment}}">
+                        <img ng-src="{{row.activity_attachment}}"/></div>
+                </div>
+                <div class="meta">
+                    <div class="date">{{row.activity_date | date:'shortDate'}}</div>
+                    <div class="stats">
+                        <span title="Likes">{{row.activity_likes}} <i class="fa fa-thumbs-o-up"></i></span>
+                        <span title="Shares">{{row.activity_shares}} <i class="fa fa-share"></i></span>
+                        <span title="Comments">{{row.activity_comments}} <i class="fa fa-comments-o"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/lodash/4.16.1/lodash.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+<script>
+    angular.module('nuvi', ['ngAnimate']);
+
+    angular.module('nuvi').controller('mainCtrl', function ($scope, $http, $filter) {
+        var typeIcons = {
+            tumblr: 'fa-tumblr-square',
+            facebook: 'fa-facebook-square',
+            twitter: 'fa-twitter-square',
+            instagram: 'fa-instagram'
+        };
+
+        $scope.filter = {
+            filter: $filter('filter'),
+            text: '',
+            selectAll: true
+        };
+        $scope.list = [];
+
+        $scope.getSentimentClass = function (row) {
+            if (row.activity_sentiment > 0) {
+                return 'good';
+            } else if (row.activity_sentiment < 0) {
+                return 'bad';
+            } else {
+                return ''
+            }
+        };
+
+        $scope.getSelectedClass = function (row) {
+            return row.selected ? 'fa-check-square-o' : 'fa-square-o';
+        };
+
+        $scope.getTypeClass = function (row) {
+            return _.get(typeIcons, row.provider, 'question-circle-o');
+        };
+
+        $scope.getSelectAllClass = function () {
+            return $scope.filter.selectAll ? 'fa-check-square-o' : 'fa-square-o';
+        };
+
+        $scope.select = function (row) {
+            row.selected = !row.selected;
+        };
+
+        $scope.selectAll = function () {
+            $scope.filter.selectAll = !$scope.filter.selectAll;
+            _.forEach($scope.filter.list, function(row) {
+                row.selected = !$scope.filter.selectAll;
+            });
+        };
+
+        $scope.updateFilter = _.debounce(function () {
+            $scope.filter.list = $scope.filter.filter($scope.list, $scope.filter.text);
+            $scope.$digest();
+        }, 250);
+
+
+        $http.get('https://nuvi-challenge.herokuapp.com/activities').then(function (response) {
+            $scope.list = response.data;
+            $scope.filter.list = $scope.list;
+        });
+    });
+
+</script>
+</body>
+</html>
